@@ -45,16 +45,23 @@ jobs:
       - name: Find the build output folder
         id: dist
         # Reads outputPath from angular.json, so this works whatever the project is called.
+        # If outputPath is not set (the default in current Angular), the build goes to dist/<project-name>.
         # Current Angular puts the site in <outputPath>/browser; older versions use <outputPath>.
         run: |
           DIST=$(node -e "
-            const a = require('./angular.json');
-            const p = Object.values(a.projects)[0];
-            const o = p.architect.build.options.outputPath;
-            const base = typeof o === 'string' ? o : (o.base + (o.browser ? '/' + o.browser : ''));
             const fs = require('fs');
+            const a = require('./angular.json');
+            const name = Object.keys(a.projects)[0];
+            const p = a.projects[name];
+            const o = ((p.architect || p.targets).build.options || {}).outputPath;
+            let base = 'dist/' + name;
+            if (typeof o === 'string') base = o;
+            else if (o && o.base) base = o.base;
             console.log(fs.existsSync(base + '/browser') ? base + '/browser' : base);
           ")
+          if [ ! -f "$DIST/index.html" ]; then
+            echo "No index.html in $DIST. Contents of dist/:"; ls -R dist | head -50; exit 1
+          fi
           echo "Build output: $DIST"
           ls "$DIST"
           echo "path=$DIST" >> "$GITHUB_OUTPUT"
