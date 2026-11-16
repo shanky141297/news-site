@@ -14,13 +14,20 @@ export class App implements OnInit {
     private newsFeedService: NewsFeedService,
     private cdr: ChangeDetectorRef,
   ) {}
-
+  
   news: any = [];
-
+  
   ngOnInit() {
+    this.getBriefing() 
+    
+  }
+  
+  
+  getBriefing(){
     this.newsFeedService.getLastestbriefing().subscribe({
       next: (response) => {
         this.news = response;
+        console.log(new Date());
         console.log('this.news', this.news);
         this.cdr.markForCheck();
       },

@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+// Shared colours and sizes
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --border: #e3e6eb;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --primary: #2b4a8b;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+button {
+  font: inherit;
+}

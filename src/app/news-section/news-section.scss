@@ -1,6 +1,185 @@
-.categories {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
+// Stack everything vertically so the edition toggle can sit on the right
+:host {
+  display: flex;
+  flex-direction: column;
 }
 
+// ---------- Edition toggle (Morning / Evening) ----------
+:host > div:first-of-type {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  input {
+    margin: 0;
+    accent-color: var(--primary);
+  }
+
+  // space between the two options
+  label:first-of-type {
+    margin-right: 0.75rem;
+  }
+}
+
+// ---------- Briefing card ----------
+// The title, "Top Headlines", each headline and the link row are separate
+// elements, so they share a white background and side borders to look like one card.
+h2,
+h3,
+.headlines,
+.briefing-link {
+  margin: 0;
+  padding: 0 1.5rem;
+  background: var(--surface);
+  border-inline: 1px solid var(--border);
+}
+
+// Card top
+h2 {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+h3 {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.headlines p {
+  margin: 0;
+  padding: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+// Card bottom: "Open full briefing" link
+.briefing-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
+
+  a {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: var(--text);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--primary);
+    }
+  }
+
+  span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+}
+
+// Number the headlines 1. 2. 3. ...
+:host > div {
+  counter-reset: headline;
+}
+
+.headlines p::before {
+  counter-increment: headline;
+  content: counter(headline) '. ';
+}
+
+// ---------- Stories ----------
+// "Stories in this briefing"
+:host > div > p {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+// Category filter pills
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+
+  button {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--text-muted);
+      background: var(--bg);
+    }
+
+    // Selected category
+    &.active {
+      border-color: var(--text);
+      background: var(--text);
+      color: #fff;
+    }
+  }
+}
+
+// Story cards (every section that isn't the headlines or the pills)
+:host > div > section:not(.headlines):not(.categories) {
+  margin-bottom: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  p {
+    margin: 0;
+  }
+
+  // Category
+  p:nth-child(1) {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  // Headline
+  p:nth-child(2) {
+    margin-top: 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  // Summary
+  p:nth-child(3) {
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+  }
+
+  // Why it matters
+  p:nth-child(4) {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+}

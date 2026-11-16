@@ -1,24 +1,28 @@
 
-<h2>{{newsBlock[0].title}}</h2>
-<h3>Top Headlines</h3>
 <div>
     <input type="radio" [(ngModel)]="theme" value="morning" />
     <label for="contactChoice1">Morning</label>
-    
+
     <input type="radio" [(ngModel)]="theme" value="evening" />
     <label for="contactChoice2">Evening</label>
 </div>
 <div *ngFor="let new of filterTheme(newsBlock)">
+    <h2>{{new.title}}</h2>
+    <h3>Top Headlines</h3>
     <section *ngFor="let headline of new.headlines" class="headlines">
         <p>{{headline}}</p>
     </section>
+    <div class="briefing-link">
+        <a [href]="new.artifactUrl" target="_blank" rel="noopener">Open full briefing ↗</a>
+        <span>Opens in Claude. You need to be signed in.</span>
+    </div>
     <!-- categories -->
     <p>Stories in this briefing</p>
     <section class="categories">
-        <button  type="button" (click)="selectCategory('All')">
+        <button type="button" [class.active]="categoryType === 'All'" (click)="selectCategory('All')">
             All
         </button>
-        <button *ngFor="let category of new.categories" type="button" (click)="selectCategory(category.key)">
+        <button *ngFor="let category of new.categories" type="button" [class.active]="categoryType === category.key" (click)="selectCategory(category.key)">
             {{category.label}} [{{category.count}}]
         </button>
     </section>

@@ -8,8 +8,8 @@
   <div class="header">
     <h1>Daily Briefing</h1>
     <div class="status">
-      <label>{{news.lastUpdated | date: 'dd/MM/yyyy hh:mm:ss' }}</label>
-      <button type="button">Refresh</button>
+      <label>{{news.lastUpdated | date: 'dd/MM/yyyy HH:mm:ss' }}</label>
+      <button type="button" (click)="getBriefing()">Refresh</button>
     </div>
   </div>
   <div class="news-feed">
