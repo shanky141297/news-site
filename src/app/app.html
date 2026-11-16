@@ -1,0 +1,19 @@
+<!-- <div class="last-update">{{news.lastUpdated}}</div>
+<div *ngFor="let new of news.entries" class="last-new">
+  {{new | json}}
+</div> -->
+
+
+<div class="news-wrapper">
+  <div class="header">
+    <h1>Daily Briefing</h1>
+    <div class="status">
+      <label>{{news.lastUpdated | date: 'dd/MM/yyyy hh:mm:ss' }}</label>
+      <button type="button">Refresh</button>
+    </div>
+  </div>
+  <div class="news-feed">
+    <app-news-section [newsBlock]="news.entries" ></app-news-section>
+  </div>
+</div>
+
